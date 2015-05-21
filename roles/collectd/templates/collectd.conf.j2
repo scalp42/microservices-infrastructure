@@ -1,4 +1,4 @@
-# collectd config
+# collectd
 
 Hostname "{{ ansible_hostname }}"
 FQDNLookup false
@@ -57,12 +57,12 @@ LoadPlugin "users"
   IgnoreSelected false
 </Plugin>
 
-<Plugin "network">
-  Server "localhost" "25826"
-</Plugin>
-
 <Plugin "syslog">
   LogLevel "err"
+</Plugin>
+
+<Plugin "network">
+  Server "localhost" "25826"
 </Plugin>
 
 # EOF

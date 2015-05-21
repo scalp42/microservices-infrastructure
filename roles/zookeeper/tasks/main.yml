@@ -62,4 +62,6 @@
   tags:
     - zookeeper
 
+- include: zookeeper.yml
+
 - meta: flush_handlers
