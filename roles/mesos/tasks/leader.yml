@@ -43,11 +43,8 @@
 - name: deploy iptables configuration
   sudo: yes
   copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-  with_items:
-    - src: mesos-leader-consul.cfg
-      dest: /etc/consul-template/config.d
+    src: mesos-leader-consul.cfg
+    dest: /etc/consul-template/config.d
   notify:
     - reload consul-template
   tags:
@@ -62,5 +59,26 @@
     reload consul-template
   tags:
     - mesos
+
+- name: install collectd mesos-master plugin
+  sudo: yes
+  copy:
+    src: mesos-master.py
+    dest: /usr/share/collectd
+    mode: u=r
+  tags:
+    - mesos
+    - collectd
+
+- name: configure collectd mesos-master plugin
+  sudo: yes
+  copy:
+    src: mesos-master.conf
+    dest: /etc/collectd.d
+  notify:
+    - restart collectd
+  tags:
+    - mesos
+    - collectd
 
 - include: nginx-proxy.yml

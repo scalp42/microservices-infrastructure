@@ -1,0 +1,21 @@
+---
+- name: install collectd marathon plugin
+  sudo: yes
+  copy:
+    src: marathon.py
+    dest: /usr/share/collectd
+    mode: u=r
+  tags:
+    - marathon
+    - collectd
+
+- name: configure collectd marathon plugin
+  sudo: yes
+  copy:
+    src: marathon.conf
+    dest: /etc/collectd.d
+  notify:
+    - restart collectd
+  tags:
+    - marathon
+    - collectd

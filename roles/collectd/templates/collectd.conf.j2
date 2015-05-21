@@ -4,7 +4,6 @@ Hostname "{{ ansible_hostname }}"
 FQDNLookup false
 Interval 10
 Include "/etc/collectd/conf.d/"
-Include "/etc/collectd/filters.conf"
 TypesDB "/usr/share/collectd/types.db"
 
 LoadPlugin "cpu"
@@ -13,7 +12,7 @@ LoadPlugin "df"
 LoadPlugin "interface"
 LoadPlugin "load"
 LoadPlugin "memory"
-loadPlugin "ntpd"
+LoadPlugin "network"
 LoadPlugin "processes"
 LoadPlugin "swap"
 LoadPlugin "syslog"
@@ -58,10 +57,8 @@ LoadPlugin "users"
   IgnoreSelected false
 </Plugin>
 
-<Plugin "ntpd">
-  Host "localhost"
-  Port 123
-  ReverseLookups false
+<Plugin "network">
+  Server "localhost" "25826"
 </Plugin>
 
 <Plugin "syslog">

@@ -2,7 +2,7 @@
 - name: restart collectd
   sudo: yes 
   service:
-    name: "collectd"
+    name: collectd
     state: restarted
   tags: 
-    - monitoring
+    - collectd
