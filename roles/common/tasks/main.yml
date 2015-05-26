@@ -32,10 +32,25 @@
     state: present
 
 - name: disable firewalld
-  service: 
-    name: firewalld 
-    enabled: false 
+  service:
+    name: firewalld
+    enabled: false
     state: stopped
+
+- name: install pip
+  sudo: yes
+  yum:
+    name: python-pip
+    state: present
+
+- name: upgrade pip and setuptools
+  sudo: yes
+  pip:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - pip
+    - setuptools
 
 - include: users.yml
 - include: ssl.yml
