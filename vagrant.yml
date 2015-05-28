@@ -2,12 +2,14 @@
 - hosts: all
   roles:
     - common
+    - collectd
+    - logrotate
     - consul-template
     - docker
     - dnsmasq
     - nginx
     - consul
-    - registrator
+    - logstash
     - vault
     - zookeeper
     - mesos

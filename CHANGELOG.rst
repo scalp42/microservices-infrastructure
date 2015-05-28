@@ -7,9 +7,27 @@ Changelog
 Features
 ^^^^^^^^
 * security-setup: add additional confirmation prompt for password #173
+* security-setup: make security settings more granular #239
 * Make consul domain name configurable #100 & #156
 * enable mesos resource configurations for followers #194
 * generate sha256 signed CA/certs by default #213
+* Add support for Hashicorp Vault #225
+* Add mesos-consul support #251
+* remove registrator for mesos-consul #263 
+* Create a local host file #146
+* Clean up security-setup options #258 
+* Upgrade to consul 0.5.1 #270
+* Update consul to 0.5.2 #304
+* Implement consul ACL upserts #266
+* Add marathon-consul support #264
+* Add Logstash role #275
+* Add consul service active check script #287
+* Add metadata to hosts in Openstack #290
+* Update usage of argparse #296
+* Add Dockerfile to provide operational environment #325
+* Move to ciscocloud/mesos-consul container #333
+* Add collectd to system #335
+* Remove NetworkManger dependency for dnsmasq #330
 
 Fixes
 ^^^^^
@@ -19,6 +37,18 @@ Fixes
 * disable firewalld #193
 * Have awk read /proc/uptime directly #216
 * security-setup now uses proper common names #228
+* serialize consul restarts #262
+* Remove use of sudo for local file modify #272
+* Use ciscocloud data volume for zookeeper #282
+* Consul requires restart on acl_master_token change #283
+* Fix vault restart #231
+* Fix issue with Consul restart #293
+* Fix/marathon race #305
+* vault: wait for port to open #307
+* Fix for "install nginx admin password" task in consul role #313
+* Feature/nginx update #317
+* ansible nova_compute module bug #320
+* Updated Ansible version constraint #321
 
 0.2.0 (04-10-2015)
 ------------------

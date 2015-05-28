@@ -7,9 +7,10 @@ which can be customized, generally using Ansible variables.
 .. toctree::
    :maxdepth: 2
 
+   collectd.rst
    consul.rst
    haproxy.rst
+   logstash.rst
    marathon.rst
    mesos.rst
-   registrator.rst
    zookeeper.rst

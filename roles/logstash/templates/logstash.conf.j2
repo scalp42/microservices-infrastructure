@@ -1,0 +1,38 @@
+input {
+  file {
+    path => "/logs/docker/*/*-json.log"
+    type => docker
+  }
+  file {
+    path => "/logs/mesos/*"
+    type => mesos
+  }
+  syslog {
+    port => 1514
+    type => syslog
+  }
+  udp {
+    port => 25826
+    type => collectd
+    codec => collectd
+  }
+  udp {
+    port => 8125
+    type => statsd
+  }
+{% if logstash_input_log4j %}
+  log4j {
+    mode => "server"
+    port => {{ logstash_log4j_port }}
+    type => "log4j"
+  }
+{% endif %}
+}
+
+output {
+{% if logstash_output_stdout %}
+  stdout {
+    codec => rubydebug
+  }
+{% endif %}
+}

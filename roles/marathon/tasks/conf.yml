@@ -1,7 +1,7 @@
 ---
 - name: create zookeeper acl 
   sudo: yes 
-  shell: "{{ marathon_zk_acl_cmd }}" 
+  command: "{{ marathon_zk_acl_cmd }}" 
   notify:
     - restart marathon
   when: zk_marathon_user_secret is defined
@@ -32,6 +32,8 @@
       value: "{{ marathon_keystore_password }}"
     - key: http_port
       value: 18080
+    - key: event_subscriber
+      value: http_callback
   notify:
     - restart marathon
   tags:

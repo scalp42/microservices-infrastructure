@@ -1,15 +1,4 @@
 ---
-- name: generate follower consul service
-  sudo: yes
-  template:
-    src: mesos-follower-consul.j2
-    dest: "{{ consul_dir }}/mesos-follower.json"
-  notify:
-    - reload consul
-  tags:
-    - consul-service
-    - mesos
-
 - name: disable mesos leader
   sudo: yes
   service:
@@ -29,7 +18,7 @@
     - mesos  
 
 - name: write credential
-  when: mesos_authenticate_followers|bool
+  when: do_mesos_follower_auth|bool
   sudo: yes
   copy:
     dest: /etc/mesos/follower-credential
@@ -40,7 +29,7 @@
     - mesos
 
 - name: delete credential
-  when: not mesos_authenticate_followers|bool
+  when: not do_mesos_follower_auth|bool
   sudo: yes
   file:
     dest: /etc/mesos/follower-credential
@@ -50,7 +39,7 @@
     - mesos
 
 - name: enable credential option
-  when: mesos_authenticate_followers|bool
+  when: do_mesos_follower_auth|bool
   sudo: yes
   copy:
     dest: /etc/mesos-slave/credential
@@ -60,7 +49,7 @@
     - mesos
 
 - name: disable credential option
-  when: not mesos_authenticate_followers|bool
+  when: not do_mesos_follower_auth|bool
   sudo: yes
   file:
     dest: /etc/mesos-slave/credential

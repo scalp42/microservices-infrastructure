@@ -16,13 +16,23 @@
 - hosts: all
   roles:
     - common
+    - collectd
+    - logrotate
     - consul-template
     - docker
     - dnsmasq
     - nginx
+    - logstash
+
+- hosts: dc1
+  gather_facts: no
+  roles:
     - consul
-    - registrator
-    - logrotate
+    
+- hosts: dc2
+  gather_facts: no
+  roles:
+    - consul 
 
 - include: playbooks/consul-join-wan.yml
 

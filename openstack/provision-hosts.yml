@@ -21,6 +21,7 @@
           - net-id: "{{ os_net_id }}"
         security_groups: "{{ security_group }}"
         state: "{{ nova_compute_state }}"
+        meta: "{{ host_metadata | default() }}"
       always_run: yes
       register: host
       tags: host
@@ -50,4 +51,19 @@
         state: started
       always_run: yes
       when: host.changed and nova_compute_state == "present"
+      tags: host
+
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: list of newly provisioned hosts to merge with local /etc/hosts file
+      local_action:
+        module: lineinfile
+        dest: "{{ playbook_dir }}/../hosts.merge"
+        regexp: ".+ {{ item }}$"
+        line: "{{ hostvars[item].ansible_ssh_host }} {{ item }}"
+        state: present
+        create: True
+      when: hostvars[item].ansible_ssh_host is defined
+      with_items: groups['all']
       tags: host

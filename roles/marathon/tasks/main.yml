@@ -15,6 +15,15 @@
   tags:
     - marathon
 
+- name: install wait script
+  sudo: yes
+  template:
+    src: marathon-wait-for-listen.sh.j2
+    dest: /usr/local/bin/marathon-wait-for-listen.sh
+    mode: u=rwx,g=rx,o=rx
+  tags:
+    - marathon
+
 - include: conf.yml
 
 - name: configure marathon unit file
@@ -37,6 +46,8 @@
     state: started
   tags:
     - marathon
+
+- meta: flush_handlers
 
 - include: nginx-proxy.yml
 
@@ -80,3 +91,5 @@
     - reload consul
   tags:
     - marathon
+
+- include: jobs.yml

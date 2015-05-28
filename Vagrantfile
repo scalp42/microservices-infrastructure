@@ -3,12 +3,13 @@
 require 'yaml'
 
 def load_security
-  if !File.exist? "security.yml"
+  fname = File.join(File.dirname(__FILE__), "security.yml")
+  if !File.exist? fname
     $stderr.puts "security.yml not found - please run `./security-setup` and try again."
     exit 1
   end
 
-  YAML.load_file("security.yml")
+  YAML.load_file(fname)
 end
 
 Vagrant.configure(2) do |config|
@@ -17,7 +18,9 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox"
   config.vm.provider "vmware_fusion"
 
-  config.vm.box = "CiscoCloud/shipped-devbox"
+  config.vm.box = "CiscoCloud/microservices-infrastructure"
+
+  config.vm.synced_folder ".", "/vagrant", disabled: true
 
   config.vm.network :forwarded_port, guest: 2181,  host: 2181  # ZooKeeper
   config.vm.network :forwarded_port, guest: 5050,  host: 5050  # Mesos leader
@@ -38,6 +41,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.provision "ansible" do |ansible|
+    ansible.raw_ssh_args = ['-o IdentitiesOnly=yes']
     ansible.extra_vars = { ansible_ssh_user: 'vagrant' }
     ansible.playbook = "vagrant.yml"
     ansible.groups = {
